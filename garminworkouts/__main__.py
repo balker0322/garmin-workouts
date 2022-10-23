@@ -7,7 +7,7 @@ import os
 
 from garminworkouts.config import configreader
 from garminworkouts.garmin.garminclient import GarminClient
-from garminworkouts.models.workout import Workout
+from garminworkouts.models.workout import Workout, RunningWorkout
 from garminworkouts.utils.validators import writeable_dir
 
 import account
@@ -17,7 +17,9 @@ def command_import(args):
     workout_files = glob.glob(args.workout)
 
     workout_configs = [configreader.read_config(workout_file) for workout_file in workout_files]
-    workouts = [Workout(workout_config, args.ftp, args.target_power_diff) for workout_config in workout_configs]
+    # workouts = [Workout(workout_config, args.ftp, args.target_power_diff) for workout_config in workout_configs]
+    target_pace = configreader.read_config(r'running_workouts/pace/pace.yaml')
+    workouts = [RunningWorkout(workout_config, target_pace) for workout_config in workout_configs]
 
     with _garmin_client(args) as connection:
         existing_workouts_by_name = {Workout.extract_workout_name(w): w for w in connection.list_workouts()}
@@ -99,8 +101,8 @@ def main():
     parser_import.add_argument("workout",
                                help="File(s) with workout(s) to import, "
                                     "wildcards are supported e.g: sample_workouts/*.yaml")
-    parser_import.add_argument("--ftp", required=True, type=int,
-                               help="FTP to calculate absolute target power from relative value")
+    # parser_import.add_argument("--ftp", required=True, type=int,
+    #                            help="FTP to calculate absolute target power from relative value")
     parser_import.add_argument("--target-power-diff", default=0.05, type=float,
                                help="Percent of target power to calculate final target power range")
     parser_import.set_defaults(func=command_import)

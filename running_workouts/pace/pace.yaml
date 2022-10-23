@@ -1,0 +1,4 @@
+RECOVERY_PACE: {type: "pace", min: "5:30", max: "6:00" }
+5k_PACE: {type: "pace", min: "4:04", max: "4:45" }
+10K_PACE: {type: "pace", min: "4:35", max: "4:54" }
+MILE_PACE: {type: "pace", min: "4:03", max: "4:22" }
