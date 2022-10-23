@@ -145,19 +145,6 @@ class Workout(object):
         }
 
     def _interval_step(self, step_config, child_step_id, step_order):
-        x = {
-            "type": "ExecutableStepDTO",
-            "stepOrder": step_order,
-            "stepType": self._INTERVAL_STEP_TYPE,
-            "childStepId": child_step_id,
-            "endCondition": self._end_condition(step_config),
-            "endConditionValue": self._end_condition_value(step_config),
-            "targetType": self._target_type(step_config),
-            "targetValueOne": self._target_value_one(step_config),
-            "targetValueTwo": self._target_value_two(step_config)
-        }
-        print(x)
-        return x
         return {
             "type": "ExecutableStepDTO",
             "stepOrder": step_order,
@@ -269,20 +256,6 @@ class RunningWorkout(Workout):
         workout['sportType'] = self._RUNNING_SPORT_TYPE
         workout['workoutSegments'][0]['sportType'] = self._RUNNING_SPORT_TYPE
         return workout
-        return {
-            self._WORKOUT_ID_FIELD: workout_id,
-            self._WORKOUT_OWNER_ID_FIELD: workout_owner_id,
-            self._WORKOUT_NAME_FIELD: self.get_workout_name(),
-            self._WORKOUT_DESCRIPTION_FIELD: self._generate_description(),
-            "sportType": self._CYCLING_SPORT_TYPE,
-            "workoutSegments": [
-                {
-                    "segmentOrder": 1,
-                    "sportType": self._CYCLING_SPORT_TYPE,
-                    "workoutSteps": self._steps(self.config["steps"])
-                }
-            ]
-        }
     
     def _get_step_description(self, step_config):
         step_description = step_config.get('description')
