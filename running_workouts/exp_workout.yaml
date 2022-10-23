@@ -4,7 +4,7 @@ steps:
   - { type: "warmup", duration: "5:00" }
   - &FARTLEK
     - { type: "run", duration: "1:00", target: 10K_PACE }
-    - { type: "recovery", duration: "1:00", target: RECOVERY_PACE }
+    - { type: "recovery", duration: "200m", target: RECOVERY_PACE, description: "Recovery pace"}
   - *FARTLEK
   - *FARTLEK
   - *FARTLEK

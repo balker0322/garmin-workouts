@@ -298,10 +298,9 @@ class RunningWorkout(Workout):
         return False
     
     def _str_to_meters(self, distance_string):
-        value = float(distance_string.lower().split('m')[0])
-        if 'k' in distance_string.lower():
-            value *= 1000.0
-        return value
+        if 'km' in distance_string.lower():
+            return float(distance_string.lower().split('km')[0])*1000.0
+        return float(distance_string.lower().split('m')[0])
 
     def _end_condition(self, step_config):
         duration = step_config.get("duration")
