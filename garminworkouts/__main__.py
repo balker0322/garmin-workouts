@@ -9,17 +9,42 @@ from garminworkouts.config import configreader
 from garminworkouts.garmin.garminclient import GarminClient
 from garminworkouts.models.workout import Workout, RunningWorkout
 from garminworkouts.utils.validators import writeable_dir
+from getpass import getpass
 
-import account
+# import account
+
+
+def command_import_run(args):
+    workout_files = glob.glob(r'running_workouts/*.yaml')
+
+    workout_configs = [configreader.read_config(workout_file) for workout_file in workout_files]
+    target_pace = configreader.read_config(os.path.join(r'running_workouts/pace', args.pace))
+    workouts = [RunningWorkout(workout_config, target_pace) for workout_config in workout_configs]
+
+    with _garmin_client(args) as connection:
+        existing_workouts_by_name = {Workout.extract_workout_name(w): w for w in connection.list_workouts()}
+
+        for workout in workouts:
+            workout_name = workout.get_workout_name()
+            existing_workout = existing_workouts_by_name.get(workout_name)
+
+            if existing_workout:
+                workout_id = Workout.extract_workout_id(existing_workout)
+                workout_owner_id = Workout.extract_workout_owner_id(existing_workout)
+                payload = workout.create_workout(workout_id, workout_owner_id)
+                logging.info("Updating workout '%s'", workout_name)
+                connection.update_workout(workout_id, payload)
+            else:
+                payload = workout.create_workout()
+                logging.info("Creating workout '%s'", workout_name)
+                connection.save_workout(payload)
 
 
 def command_import(args):
     workout_files = glob.glob(args.workout)
 
     workout_configs = [configreader.read_config(workout_file) for workout_file in workout_files]
-    # workouts = [Workout(workout_config, args.ftp, args.target_power_diff) for workout_config in workout_configs]
-    target_pace = configreader.read_config(r'running_workouts/pace/pace.yaml')
-    workouts = [RunningWorkout(workout_config, target_pace) for workout_config in workout_configs]
+    workouts = [Workout(workout_config, args.ftp, args.target_power_diff) for workout_config in workout_configs]
 
     with _garmin_client(args) as connection:
         existing_workouts_by_name = {Workout.extract_workout_name(w): w for w in connection.list_workouts()}
@@ -79,8 +104,10 @@ def _garmin_client(args):
     return GarminClient(
         connect_url=args.connect_url,
         sso_url=args.sso_url,
-        username=account.USERNAME,
-        password=account.PASSWORD,
+        # username=account.USERNAME,
+        # password=account.PASSWORD,
+        username = input('Enter username:'),
+        password = getpass('Enter password:'),
         cookie_jar=args.cookie_jar
     )
 
@@ -101,8 +128,8 @@ def main():
     parser_import.add_argument("workout",
                                help="File(s) with workout(s) to import, "
                                     "wildcards are supported e.g: sample_workouts/*.yaml")
-    # parser_import.add_argument("--ftp", required=True, type=int,
-    #                            help="FTP to calculate absolute target power from relative value")
+    parser_import.add_argument("--ftp", required=True, type=int,
+                               help="FTP to calculate absolute target power from relative value")
     parser_import.add_argument("--target-power-diff", default=0.05, type=float,
                                help="Percent of target power to calculate final target power range")
     parser_import.set_defaults(func=command_import)
@@ -128,6 +155,12 @@ def main():
     parser_delete = subparsers.add_parser("delete", description="Delete workout")
     parser_delete.add_argument("--id", required=True, help="Workout id, use list command to get workouts identifiers")
     parser_delete.set_defaults(func=command_delete)
+
+    parser_import = subparsers.add_parser("import_run", description="Import workout(s) from file(s) into Garmin Connect")
+    parser_import.add_argument("pace",
+                               help="File(s) with workout(s) to import, "
+                                    "wildcards are supported e.g: sample_workouts/*.yaml")
+    parser_import.set_defaults(func=command_import_run)
 
     args = parser.parse_args()
 
