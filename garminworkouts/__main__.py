@@ -106,9 +106,10 @@ def _garmin_client(args):
         sso_url=args.sso_url,
         # username=account.USERNAME,
         # password=account.PASSWORD,
-        username = input('Enter username:'),
-        password = getpass('Enter password:'),
-        cookie_jar=args.cookie_jar
+        username = input('Enter username: '),
+        password = getpass('Enter password: '),
+        # cookie_jar=args.cookie_jar
+        cookie_jar=None
     )
 
 
