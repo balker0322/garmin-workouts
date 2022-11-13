@@ -1,0 +1,4 @@
+name: "60min Recovery Run"
+
+steps:
+  - { type: "run", duration: "1:00:00", target: RECOVERY_PACE}

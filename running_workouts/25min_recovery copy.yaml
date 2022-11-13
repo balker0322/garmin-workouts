@@ -1,0 +1,4 @@
+name: "11k Recovery Run"
+
+steps:
+  - { type: "run", duration: "11km", target: RECOVERY_PACE}
