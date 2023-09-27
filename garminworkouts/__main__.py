@@ -10,6 +10,7 @@ from garminworkouts.garmin.garminclient import GarminClient
 from garminworkouts.models.workout import Workout, RunningWorkout
 from garminworkouts.utils.validators import writeable_dir
 from getpass import getpass
+import datetime
 
 # import account
 
@@ -38,6 +39,65 @@ def command_import_run(args):
                 payload = workout.create_workout()
                 logging.info("Creating workout '%s'", workout_name)
                 connection.save_workout(payload)
+
+
+def import_run_workout(connection, workout_files_dir, pace_file, start_date=None):
+    workout_files = glob.glob(workout_files_dir)
+
+    workout_configs = [configreader.read_config(workout_file) for workout_file in workout_files]
+    target_pace = configreader.read_config(pace_file)
+    workouts = [RunningWorkout(workout_config, target_pace) for workout_config in workout_configs]
+
+    existing_workouts_by_name = {Workout.extract_workout_name(w): w for w in connection.list_workouts()}
+
+    for workout in workouts:
+        workout_name = workout.get_workout_name()
+        existing_workout = existing_workouts_by_name.get(workout_name)
+
+        if existing_workout:
+            workout_id = Workout.extract_workout_id(existing_workout)
+            workout_owner_id = Workout.extract_workout_owner_id(existing_workout)
+            payload = workout.create_workout(workout_id, workout_owner_id)
+            logging.info("Updating workout '%s'", workout_name)
+            connection.update_workout(workout_id, payload)
+        else:
+            payload = workout.create_workout()
+            logging.info("Creating workout '%s'", workout_name)
+            connection.save_workout(payload)
+    
+    if start_date is not None:
+        schedule_run_workout(connection, workout_files_dir, pace_file, start_date)
+
+
+def schedule_run_workout(connection, workout_files_dir, pace_file, start_date):
+    workout_files = glob.glob(workout_files_dir)
+
+    workout_configs = [configreader.read_config(workout_file) for workout_file in workout_files]
+    target_pace = configreader.read_config(pace_file)
+    workouts = [RunningWorkout(workout_config, target_pace) for workout_config in workout_configs]
+
+    existing_workouts_by_name = {Workout.extract_workout_name(w): w for w in connection.list_workouts()}
+
+    for workout in workouts:
+        workout_name = workout.get_workout_name()
+        existing_workout = existing_workouts_by_name.get(workout_name)
+
+        day_delta = {
+            'recovery run a':0,
+            'recovery run b':1,
+            'speed run':2,
+            'recovery run c':3,
+            'long run':4,
+        }
+
+        def get_date():
+            run_workout_time = ' '.join(workout_name.split()[1:])
+            date = start_date + datetime.timedelta(days=day_delta[run_workout_time])
+            return date.strftime("%Y-%m-%d")
+
+        existing_workout = existing_workouts_by_name.get(workout_name)
+        workout_id = Workout.extract_workout_id(existing_workout)
+        connection.schedule_workout(workout_id, get_date())
 
 
 def command_import(args):
@@ -100,17 +160,27 @@ def command_delete(args):
         connection.delete_workout(args.id)
 
 
-def _garmin_client(args):
-    return GarminClient(
+def _garmin_client(args, account=None):
+    
+    if account:
+        username = account['username']
+        password = account['password']
+    else:
+        username = input('Enter username: ')
+        password = getpass('Enter password: ')
+
+    client =  GarminClient(
         connect_url=args.connect_url,
         sso_url=args.sso_url,
         # username=account.USERNAME,
         # password=account.PASSWORD,
-        username = input('Enter username: '),
-        password = getpass('Enter password: '),
+        username = username,
+        password = password,
         # cookie_jar=args.cookie_jar
         cookie_jar=None
     )
+    print(f'Done authenticating: {username}')
+    return client
 
 
 def main():
@@ -170,6 +240,58 @@ def main():
 
     args.func(args)
 
+def import_running_workout(args, account, pace_file, wtg, start_date):
+    workout_files = os.path.join('nike_42k', f'{wtg:02}', '*.yaml')
+
+    with _garmin_client(args, account) as connection:
+        import_run_workout(connection=connection, workout_files_dir=workout_files, pace_file=pace_file, start_date=start_date)
+
+
+
+def main2():
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+                                     description="Manage Garmin Connect workout(s)")
+    # parser.add_argument("--username", "-u", required=True, help="Garmin Connect account username")
+    # parser.add_argument("--password", "-p", required=True, help="Garmin Connect account password")
+    parser.add_argument("--cookie-jar", default=".garmin-cookies.txt", help="Filename with authentication cookies")
+    parser.add_argument("--connect-url", default="https://connect.garmin.com", help="Garmin Connect url")
+    parser.add_argument("--sso-url", default="https://sso.garmin.com", help="Garmin SSO url")
+    parser.add_argument("--debug", action='store_true', help="Enables more detailed messages")
+    args = parser.parse_args()
+
+    logging_level = logging.DEBUG if args.debug else logging.INFO
+    logging.basicConfig(level=logging_level)
+
+    date_at_15_wtg = datetime.datetime(2023,5,28)
+    wtg = 9
+    # for wtg in [8, 7, 6, 5, 4, 3, 2, 1]:
+    #     start_date = date_at_15_wtg + datetime.timedelta(days=7*(15-wtg))
+
+    #     account1 = {
+    #     }
+    #     pace_file1=r'running_workouts/pace/pace2.yaml'
+
+    #     account2 = {
+    #     }
+    #     pace_file2=r'running_workouts/pace/pace.yaml'
+
+    #     import_running_workout(args, account1, pace_file1, wtg, start_date)
+    #     import_running_workout(args, account2, pace_file2, wtg, start_date)
+
+    race_date = datetime.datetime(2023,9,17)
+    wtg = 1
+    # start_date = date_at_15_wtg + datetime.timedelta(days=7*(15-wtg))
+    start_date = race_date + datetime.timedelta(days=7*(-wtg))
+    print(start_date)
+    account2 = {
+        'username':'xxxxxx@xxxx.com',
+        'password':'xxxxxx',
+    }
+    pace_file2=r'running_workouts/pace/pace.yaml'
+    import_running_workout(args, account2, pace_file2, wtg, start_date)
+
+    
+
 
 if __name__ == "__main__":
-    main()
+    main2()
