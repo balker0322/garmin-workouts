@@ -50,44 +50,114 @@
   steps:
     - { type: "run", duration: "5km" }
 
+-
   name: "7wtg_recovery_a"
+  steps:
+    - { type: "run", duration: "25:00" }
+-
   name: "7wtg_recovery_b"
+  steps:
+    - { type: "run", duration: "15:00" }
+-
   name: "7wtg_speed_a"
+  steps:
+    - { type: "warmup", duration: "5:00"}
+    - &INTERVAL
+      - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
+      - { type: "recovery", duration: "1:00", description: "Recovery" }
+    - *INTERVAL
+    - *INTERVAL
+    - &INTERVAL_2
+      - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
+      - { type: "recovery", duration: "2:00", description: "Recovery" }
+    - *INTERVAL
+    - *INTERVAL
+    - *INTERVAL
+    - *INTERVAL_2
+    - *INTERVAL
+    - *INTERVAL
+-
   name: "7wtg_speed_b"
+  steps:
+    - { type: "warmup", duration: "6:00"}
+    - { type: "run", duration: "1:00", target: MILE_PACE, description: "mile pace" }
+    - { type: "recovery", duration: "0:30", description: "Recovery" }
+    - { type: "run", duration: "3:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "recovery", duration: "1:30", description: "Recovery" }
+    - { type: "run", duration: "5:00", target: 10K_PACE, description: "10k pace" }
+    - { type: "recovery", duration: "2:30", description: "Recovery" }
+    - { type: "run", duration: "7:00", description: "Recovery pace" }
+-
   name: "7wtg_long"
+  steps:
+    - { type: "run", duration: "5km" }
 
+-
   name: "6wtg_recovery_a"
+  steps:
+    - { type: "run", duration: "35:00" }
+-  
   name: "6wtg_recovery_b"
+  steps:
+    - { type: "run", duration: "35:00" }
+-  
   name: "6wtg_speed_a"
+-  
   name: "6wtg_speed_b"
+-  
   name: "6wtg_long"
 
+-
   name: "5wtg_recovery_a"
+-  
   name: "5wtg_recovery_b"
+-  
   name: "5wtg_speed_a"
+-  
   name: "5wtg_speed_b"
+-  
   name: "5wtg_long"
 
+-
   name: "4wtg_recovery_a"
+-  
   name: "4wtg_recovery_b"
+-  
   name: "4wtg_speed_a"
+-  
   name: "4wtg_speed_b"
+-  
   name: "4wtg_long"
 
+-
   name: "3wtg_recovery_a"
+-  
   name: "3wtg_recovery_b"
+-  
   name: "3wtg_speed_a"
+-  
   name: "3wtg_speed_b"
+-  
   name: "3wtg_long"
 
+-
   name: "2wtg_recovery_a"
+-  
   name: "2wtg_recovery_b"
+-  
   name: "2wtg_speed_a"
+-  
   name: "2wtg_speed_b"
+-  
   name: "2wtg_long"
 
+-
   name: "1wtg_recovery_a"
+-  
   name: "1wtg_recovery_b"
+-  
   name: "1wtg_speed_a"
+-  
   name: "1wtg_speed_b"
+-  
   name: "1wtg_long"
