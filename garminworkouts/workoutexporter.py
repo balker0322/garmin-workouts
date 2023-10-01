@@ -47,13 +47,11 @@ class WorkoutExporter:
         target_pace = configreader.read_config(running_pace_file)
         workouts = [RunningWorkout(workout_config, target_pace) for workout_config in workout_configs]
 
-        
-        # with self.__get_garmin_client() as connection:
-        #     pass
-        # return
+
         with self.__get_garmin_client() as connection:
-            # print(connection.list_workouts())
-            existing_workouts_by_name = {Workout.extract_workout_name(w): w for w in connection.list_workouts()}
+            existing_workouts_by_name = {Workout.extract_workout_name(w): w for w in connection.list_workouts(batch_size=100)}
+
+            print('done getting current list of workouts')
 
             for workout in workouts:
 
@@ -74,9 +72,9 @@ class WorkoutExporter:
                 logging.info("Creating workout '%s'", workout_name)
                 connection.save_workout(payload)
 
-                existing_workout = existing_workouts_by_name.get(workout_name)
-                workout_id = Workout.extract_workout_id(existing_workout)
-                connection.schedule_workout(workout_id, w_date)
+                # existing_workout = existing_workouts_by_name.get(workout_name)
+                # workout_id = Workout.extract_workout_id(existing_workout)
+                # connection.schedule_workout(workout_id, w_date)
     
     def __get_workout_date(self, race_date, wtg, workout_type)->datetime.datetime:
         workout_sched = {
