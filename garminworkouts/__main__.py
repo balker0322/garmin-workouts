@@ -179,6 +179,8 @@ def _garmin_client(args, account=None):
         # cookie_jar=args.cookie_jar
         cookie_jar=None
     )
+    print(args.connect_url)
+    print(args.sso_url)
     print(f'Done authenticating: {username}')
     return client
 
@@ -264,6 +266,19 @@ def main2():
 
     date_at_15_wtg = datetime.datetime(2023,5,28)
     wtg = 9
+    account = {
+        'username':'xxxxxx@xxxx.com',
+        'password':'xxxxxx',
+    }
+
+    with _garmin_client(args, account) as connection:
+        # print(connection.list_workouts())
+        pass
+
+    # with _garmin_client(args, account) as connection:
+    #     print(connection.list_workouts())
+
+
     # for wtg in [8, 7, 6, 5, 4, 3, 2, 1]:
     #     start_date = date_at_15_wtg + datetime.timedelta(days=7*(15-wtg))
 
@@ -278,17 +293,17 @@ def main2():
     #     import_running_workout(args, account1, pace_file1, wtg, start_date)
     #     import_running_workout(args, account2, pace_file2, wtg, start_date)
 
-    race_date = datetime.datetime(2023,9,17)
-    wtg = 1
-    # start_date = date_at_15_wtg + datetime.timedelta(days=7*(15-wtg))
-    start_date = race_date + datetime.timedelta(days=7*(-wtg))
-    print(start_date)
-    account2 = {
-        'username':'xxxxxx@xxxx.com',
-        'password':'xxxxxx',
-    }
-    pace_file2=r'running_workouts/pace/pace.yaml'
-    import_running_workout(args, account2, pace_file2, wtg, start_date)
+    # race_date = datetime.datetime(2023,9,17)
+    # wtg = 1
+    # # start_date = date_at_15_wtg + datetime.timedelta(days=7*(15-wtg))
+    # start_date = race_date + datetime.timedelta(days=7*(-wtg))
+    # print(start_date)
+    # account2 = {
+    #     'username':'xxxxxx@xxxx.com',
+    #     'password':'xxxxxx',
+    # }
+    # pace_file2=r'running_workouts/pace/pace.yaml'
+    # import_running_workout(args, account2, pace_file2, wtg, start_date)
 
     
 

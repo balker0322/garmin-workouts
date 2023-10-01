@@ -1,28 +1,28 @@
 
 -
-  name: "8wtg_recovery_a"
+  name: "10km_8wtg_recovery_a"
   steps:
     - { type: "run", duration: "3.2km" }
 -
-  name: "8wtg_recovery_b"
+  name: "10km_8wtg_recovery_b"
   steps:
     - { type: "run", duration: "25:00" }
 -
-  name: "8wtg_speed_a"
+  name: "10km_8wtg_speed_a"
   steps:
     - { type: "warmup", duration: "5:00"}
-    - &INTERVAL
+    - &8wtg_INTERVAL
       - { type: "run", duration: "1:00", target: 5K_PACE, description: "5k pace" }
       - { type: "recovery", duration: "1:00", description: "Recovery" }
-    - *INTERVAL
-    - *INTERVAL
-    - *INTERVAL
-    - *INTERVAL
-    - *INTERVAL
-    - *INTERVAL
-    - *INTERVAL
+    - *8wtg_INTERVAL
+    - *8wtg_INTERVAL
+    - *8wtg_INTERVAL
+    - *8wtg_INTERVAL
+    - *8wtg_INTERVAL
+    - *8wtg_INTERVAL
+    - *8wtg_INTERVAL
 -
-  name: "8wtg_speed_b"
+  name: "10km_8wtg_speed_b"
   steps:
     - { type: "warmup", duration: "5:00"}
     - { type: "run", duration: "1:00", target: 5K_PACE, description: "5k pace" }
@@ -46,38 +46,38 @@
     - { type: "run", duration: "0:15", description: "best pace" }
     - { type: "recovery", duration: "1:00", description: "Recovery" }
 -
-  name: "8wtg_long"
+  name: "10km_8wtg_long"
   steps:
     - { type: "run", duration: "5km" }
 
 -
-  name: "7wtg_recovery_a"
+  name: "10km_7wtg_recovery_a"
   steps:
     - { type: "run", duration: "25:00" }
 -
-  name: "7wtg_recovery_b"
+  name: "10km_7wtg_recovery_b"
   steps:
     - { type: "run", duration: "15:00" }
 -
-  name: "7wtg_speed_a"
+  name: "10km_7wtg_speed_a"
   steps:
     - { type: "warmup", duration: "5:00"}
-    - &INTERVAL
+    - &7wtg_INTERVAL
       - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
       - { type: "recovery", duration: "1:00", description: "Recovery" }
-    - *INTERVAL
-    - *INTERVAL
-    - &INTERVAL_2
+    - *7wtg_INTERVAL
+    - *7wtg_INTERVAL
+    - &7wtg_INTERVAL_2
       - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
       - { type: "recovery", duration: "2:00", description: "Recovery" }
-    - *INTERVAL
-    - *INTERVAL
-    - *INTERVAL
-    - *INTERVAL_2
-    - *INTERVAL
-    - *INTERVAL
+    - *7wtg_INTERVAL
+    - *7wtg_INTERVAL
+    - *7wtg_INTERVAL
+    - *7wtg_INTERVAL_2
+    - *7wtg_INTERVAL
+    - *7wtg_INTERVAL
 -
-  name: "7wtg_speed_b"
+  name: "10km_7wtg_speed_b"
   steps:
     - { type: "warmup", duration: "6:00"}
     - { type: "run", duration: "1:00", target: MILE_PACE, description: "mile pace" }
@@ -88,76 +88,233 @@
     - { type: "recovery", duration: "2:30", description: "Recovery" }
     - { type: "run", duration: "7:00", description: "Recovery pace" }
 -
-  name: "7wtg_long"
+  name: "10km_7wtg_long"
   steps:
     - { type: "run", duration: "5km" }
 
 -
-  name: "6wtg_recovery_a"
+  name: "10km_6wtg_recovery_a"
   steps:
     - { type: "run", duration: "35:00" }
 -  
-  name: "6wtg_recovery_b"
+  name: "10km_6wtg_recovery_b"
   steps:
     - { type: "run", duration: "35:00" }
 -  
-  name: "6wtg_speed_a"
+  name: "10km_6wtg_speed_a"
+  steps:
+    - { type: "warmup", duration: "5:00"}
+    - { type: "run", duration: "3:30", target: 10K_PACE, description: "10k pace" }
+    - { type: "recovery", duration: "1:00", description: "Recovery" }
+    - { type: "run", duration: "3:30", target: 10K_PACE, description: "10k pace" }
+    - { type: "recovery", duration: "1:00", description: "Recovery" }
+    - { type: "run", duration: "2:30", target: 5K_PACE, description: "5k pace" }
+    - { type: "recovery", duration: "1:30", description: "Recovery" }
+    - { type: "run", duration: "2:30", target: 5K_PACE, description: "5k pace" }
+    - { type: "recovery", duration: "1:30", description: "Recovery" }
+    - { type: "run", duration: "1:30", target: MILE_PACE, description: "mile pace" }
+    - { type: "recovery", duration: "2:00", description: "Recovery" }
+    - { type: "run", duration: "1:30", target: MILE_PACE, description: "mile pace" }
+    - { type: "recovery", duration: "2:00", description: "Recovery" }
+    - { type: "run", duration: "0:30", description: "best pace" }
 -  
-  name: "6wtg_speed_b"
+  name: "10km_6wtg_speed_b"
+  steps:
+    - { type: "run", duration: "1:30", target: 10K_PACE, description: "10k pace" }
+    - { type: "run", duration: "1:30", description: "easy pace"}
+    - { type: "run", duration: "1:30", target: 10K_PACE, description: "10k pace" }
+    - { type: "run", duration: "1:30", description: "easy pace"}
+    - { type: "run", duration: "1:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "run", duration: "1:00", description: "easy pace"}
+    - { type: "run", duration: "1:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "run", duration: "1:00", description: "easy pace"}
+    - { type: "run", duration: "1:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "run", duration: "1:00", description: "easy pace"}
+    - { type: "run", duration: "0:30", target: MILE_PACE, description: "mile pace" }
+    - { type: "run", duration: "0:30", description: "easy pace"}
+    - { type: "run", duration: "0:30", target: MILE_PACE, description: "mile pace" }
+    - { type: "run", duration: "0:30", description: "easy pace"}
+    - { type: "run", duration: "0:30", target: MILE_PACE, description: "mile pace" }
+    - { type: "run", duration: "0:30", description: "easy pace"}
+    - { type: "run", duration: "0:30", target: MILE_PACE, description: "mile pace" }
+    - { type: "run", duration: "0:30", description: "easy pace"}
+    - { type: "run", duration: "0:15", description: "best pace" }
+    - { type: "run", duration: "0:15", description: "easy pace"}
+    - { type: "run", duration: "0:15", description: "best pace" }
+    - { type: "run", duration: "0:15", description: "easy pace"}
+    - { type: "run", duration: "0:15", description: "best pace" }
+    - { type: "run", duration: "0:15", description: "easy pace"}
+    - { type: "run", duration: "0:15", description: "best pace" }
+    - { type: "run", duration: "0:15", description: "easy pace"}
+    - { type: "run", duration: "0:15", description: "best pace" }
+    - { type: "run", duration: "0:15", description: "easy pace"}
 -  
-  name: "6wtg_long"
+  name: "10km_6wtg_long"
+  steps:
+    - { type: "run", duration: "6.5km" }
 
 -
-  name: "5wtg_recovery_a"
+  name: "10km_5wtg_recovery_a"
+  steps:
+    - { type: "run", duration: "40:00" }
 -  
-  name: "5wtg_recovery_b"
+  name: "10km_5wtg_recovery_b"
+  steps:
+    - { type: "run", duration: "35:00" }
 -  
-  name: "5wtg_speed_a"
+  name: "10km_5wtg_speed_a"
+  steps:
+    - { type: "warmup", duration: "7:00"}
+    - { type: "run", duration: "25:00", description: "tempo run" }
 -  
-  name: "5wtg_speed_b"
+  name: "10km_5wtg_speed_b"
+  steps:
+    - { type: "warmup", duration: "7:00"}
+    - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "run", duration: "1:00", description: "recovery pace"}
+    - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "run", duration: "1:00", description: "recovery pace"}
+    - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "run", duration: "1:00", description: "recovery pace"}
+    - { type: "run", duration: "10:00", description: "tempo run" }
+    - { type: "run", duration: "2:00", description: "recovery pace"}
+    - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "run", duration: "1:00", description: "recovery pace"}
+    - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "run", duration: "1:00", description: "recovery pace"}
+    - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "run", duration: "1:00", description: "recovery pace"}
 -  
-  name: "5wtg_long"
+  name: "10km_5wtg_long"
+  steps:
+    - { type: "run", duration: "8km" }
 
 -
-  name: "4wtg_recovery_a"
+  name: "10km_4wtg_recovery_a"
+  steps:
+    - { type: "run", duration: "40:00" }
 -  
-  name: "4wtg_recovery_b"
+  name: "10km_4wtg_recovery_b"
+  steps:
+    - { type: "run", duration: "30:00" }
 -  
-  name: "4wtg_speed_a"
+  name: "10km_4wtg_speed_a"
+  steps:
+    - { type: "warmup", duration: "5:00"}
+    - { type: "run", duration: "12:00", description: "strong and controlled" }
+    - { type: "run", duration: "11:00", description: "progressively faster" }
 -  
-  name: "4wtg_speed_b"
+  name: "10km_4wtg_speed_b"
+  steps:
+    - { type: "warmup", duration: "5:00"}
+    - &4wtg_INTERVAL
+      - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
+      - { type: "run", duration: "1:00", description: "recovery pace"}
+      - { type: "run", duration: "1:00", target: MILE_PACE, description: "mile pace" }
+      - { type: "run", duration: "0:30", description: "recovery pace"}
+      - { type: "run", duration: "0:15", description: "best pace" }
+      - { type: "run", duration: "0:30", description: "recovery pace"}
+      - { type: "run", duration: "0:15", description: "best pace" }
+      - { type: "run", duration: "2:00", description: "recovery pace"}
+    - *4wtg_INTERVAL
+    - *4wtg_INTERVAL
 -  
-  name: "4wtg_long"
+  name: "10km_4wtg_long"
+  steps:
+    - { type: "run", duration: "10km" }
 
 -
-  name: "3wtg_recovery_a"
+  name: "10km_3wtg_recovery_a"
+  steps:
+    - { type: "run", duration: "31:00" }
 -  
-  name: "3wtg_recovery_b"
+  name: "10km_3wtg_recovery_b"
+  steps:
+    - { type: "run", duration: "50:00" }
 -  
-  name: "3wtg_speed_a"
+  name: "10km_3wtg_speed_a"
+  steps:
+    - { type: "warmup", duration: "5:00"}
+    - { type: "run", duration: "1:00", target: 10K_PACE, description: "10k pace" }
+    - { type: "recovery", duration: "2:00", description: "Recovery" }
+    - { type: "run", duration: "0:45", target: 5K_PACE, description: "5k pace" }
+    - { type: "recovery", duration: "1:30", description: "Recovery" }
+    - { type: "run", duration: "0:30", target: MILE_PACE, description: "mile pace" }
+    - { type: "recovery", duration: "1:00", description: "Recovery" }
 -  
-  name: "3wtg_speed_b"
+  name: "10km_3wtg_speed_b"
+  steps:
+    - { type: "warmup", duration: "7:00"}
+    - { type: "run", duration: "20:00", description: "tempo run" }
 -  
-  name: "3wtg_long"
+  name: "10km_3wtg_long"
+  steps:
+    - { type: "run", duration: "11.25km" }
 
 -
-  name: "2wtg_recovery_a"
+  name: "10km_2wtg_recovery_a"
+  steps:
+    - { type: "run", duration: "45:00" }
 -  
-  name: "2wtg_recovery_b"
+  name: "10km_2wtg_recovery_b"
+  steps:
+    - { type: "run", duration: "30:00" }
 -  
-  name: "2wtg_speed_a"
+  name: "10km_2wtg_speed_a"
+  steps:
+    - { type: "warmup", duration: "5:00"}
+    - &2wtg_INTERVAL
+      - { type: "run", duration: "7:00", target: 5K_PACE, description: "5k pace" }
+      - { type: "run", duration: "2:30", description: "recovery pace"}
+    - *2wtg_INTERVAL
+    - *2wtg_INTERVAL
 -  
-  name: "2wtg_speed_b"
+  name: "10km_2wtg_speed_b"
+  steps:
+    - { type: "warmup", duration: "8:00"}
+    - { type: "run", duration: "3:00", target: 10K_PACE, description: "10k pace" }
+    - { type: "recovery", duration: "1:30", description: "Recovery" }
+    - { type: "run", duration: "1:00", target: MILE_PACE, description: "mile pace" }
+    - { type: "recovery", duration: "1:00", description: "Recovery" }
+    - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "recovery", duration: "1:00", description: "Recovery" }
+    - { type: "run", duration: "1:00", target: MILE_PACE, description: "mile pace" }
+    - { type: "recovery", duration: "1:00", description: "Recovery" }
+    - { type: "run", duration: "2:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "recovery", duration: "1:00", description: "Recovery" }
+    - { type: "run", duration: "1:00", target: MILE_PACE, description: "mile pace" }
+    - { type: "recovery", duration: "1:00", description: "Recovery" }
+    - { type: "run", duration: "5:00", target: 10K_PACE, description: "10k pace" }
+    - { type: "recovery", duration: "1:00", description: "Recovery" }
+    - { type: "run", duration: "0:30", description: "best pace" }
+    - { type: "recovery", duration: "1:00", description: "Recovery" }
 -  
-  name: "2wtg_long"
+  name: "10km_2wtg_long"
+  steps:
+    - { type: "run", duration: "10km" }
 
 -
-  name: "1wtg_recovery_a"
+  name: "10km_1wtg_recovery_a"
+  steps:
+    - { type: "run", duration: "5km" }
 -  
-  name: "1wtg_recovery_b"
+  name: "10km_1wtg_recovery_b"
+  steps:
+    - { type: "run", duration: "25:00" }
 -  
-  name: "1wtg_speed_a"
+  name: "10km_1wtg_speed_a"
+  steps:
+    - { type: "warmup", duration: "5:00"}
+    - { type: "run", duration: "5:00", description: "Recovery" }
+    - { type: "run", duration: "4:00", target: 10K_PACE, description: "10k pace" }
+    - { type: "run", duration: "3:00", target: 5K_PACE, description: "5k pace" }
+    - { type: "run", duration: "2:00", target: 10K_PACE, description: "10k pace" }
+    - { type: "run", duration: "1:00", description: "best pace" }
 -  
-  name: "1wtg_speed_b"
+  name: "10km_1wtg_speed_b"
+  steps:
+    - { type: "run", duration: "1.6km", description: "Recovery" }
 -  
-  name: "1wtg_long"
+  name: "10km_1wtg_long"
+  steps:
+    - { type: "run", duration: "10km" }
